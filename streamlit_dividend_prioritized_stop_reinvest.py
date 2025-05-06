@@ -127,6 +127,18 @@ if uploaded_file:
     final_year = results['Year'].max()
     final_income = results[results['Year'] == final_year]['Actual Income'].sum()
     st.metric(label="Total Income in Final Year", value=f"${final_income:,.2f}")
+
+    # Final Year Income Table
+    st.subheader("📋 Final Year Income by Stock")
+    final_year_data = results[results['Year'] == investment_horizon]
+    income_table = final_year_data[['Symbol', 'Actual Income', 'Shares', 'Dividend/Share', 'Annual Dividend']].copy()
+    income_table = income_table.rename(columns={
+        'Actual Income': 'Final Year Income',
+        'Dividend/Share': 'Dividend per Share',
+        'Annual Dividend': 'Total Dividends'
+    })
+    income_table = income_table.sort_values(by='Final Year Income', ascending=False)
+    st.dataframe(income_table)
     st.download_button("📥 Download Results CSV", data=csv, file_name="income_projection_results.csv", mime="text/csv")
 else:
     st.info("Upload a CSV with your portfolio to begin.")
