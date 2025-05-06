@@ -21,22 +21,6 @@ if uploaded_file:
     df = pd.read_csv(uploaded_file)
 
     results = simulate_reinvest_all(df, quarterly_contribution, investment_horizon, top_n_stocks)
-        tracking = {}
-        for _, row in stock_df.iterrows():
-            symbol = row['Symbol']
-            tracking[symbol] = {
-                "shares": row['Starting Shares'],
-                "share_price": row['Share Price'],
-                "dividend": row['Dividend'],
-                "div_growth": row['Div Growth %'] / 100,
-                "price_growth": row['Price Growth %'] / 100,
-                "reinvest_pct": row['Reinvest %'] / 100,
-                "target_income": row['Target Income'],
-                "inflation": row['Inflation %'] / 100,
-                "payout_freq": row['Payout Frequency'].upper(),
-                "met_target": False
-            }
-
         records = []
 
         for year in range(1, years + 1):
