@@ -56,12 +56,16 @@ if uploaded_file:
                 data = tracking[symbol]
                 annual_div = data['dividend'] * data['shares']
                 target = data['target_income'] * ((1 + data['inflation']) ** (year - 1))
-                reinvested_income = 0
 
-                if symbol in prioritized:
+            # Reinvest dividends for all stocks
             reinvested_income = annual_div * data['reinvest_pct']
             data['shares'] += reinvested_income / data['share_price']
-                    data['shares'] += reinvested_income / data['share_price']
+
+            # Only contribute new capital to prioritized stocks
+            if symbol in prioritized:
+                per_stock_contribution = (quarterly_contribution * 4) / len(prioritized)
+                new_shares = per_stock_contribution / data['share_price']
+                data['shares'] += new_shares
                     new_shares = per_stock_contribution / data['share_price']
                     data['shares'] += new_shares
 
@@ -72,7 +76,6 @@ if uploaded_file:
                     'Price': round(data['share_price'], 2),
                     'Dividend/Share': round(data['dividend'], 2),
                     'Annual Dividend': round(data['dividend'] * data['shares'], 2),
-                    'Reinvested Income': round(reinvested_income, 2),
                     'Actual Income': round(data['dividend'] * data['shares'], 2),
                     'Inflation-Adj Target': round(target, 2),
                     'Met Target?': data['dividend'] * data['shares'] >= target
