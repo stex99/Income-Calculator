@@ -19,7 +19,7 @@ uploaded_file = st.sidebar.file_uploader("Upload CSV", type=["csv"])
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
 
-    def simulate_prioritized_investment_stop_reinvest(stock_df, quarterly_contribution, years, top_n_stocks):
+    results = simulate_reinvest_all(df, quarterly_contribution, investment_horizon, top_n_stocks)
         tracking = {}
         for _, row in stock_df.iterrows():
             symbol = row['Symbol']
@@ -85,7 +85,7 @@ if uploaded_file:
         return pd.DataFrame(records)
 
     # Run simulation
-    results = simulate_prioritized_investment_stop_reinvest(df, quarterly_contribution, investment_horizon, top_n_stocks)
+    results = simulate_reinvest_all(df, quarterly_contribution, investment_horizon, top_n_stocks)
     results['Cumulative Income'] = results.groupby('Symbol')['Actual Income'].cumsum()
     results['Cumulative Target'] = results.groupby('Symbol')['Inflation-Adj Target'].cumsum()
 
