@@ -126,16 +126,18 @@ if uploaded_file:
     st.metric(label="Total Income in Final Year", value=f"${final_income:,.2f}")
 
     # Final Year Income Table
-    st.subheader("📋 Final Year Income by Stock")
+    # Final Year Value Table
+    st.subheader("📋 Final Year Value by Stock")
     final_year_data = results[results['Year'] == investment_horizon]
-    income_table = final_year_data[['Symbol', 'Actual Income', 'Shares', 'Dividend/Share', 'Annual Dividend']].copy()
-    income_table = income_table.rename(columns={
-        'Actual Income': 'Final Year Income',
+    value_table = final_year_data[['Symbol', 'Shares', 'Price', 'Dividend/Share', 'Annual Dividend']].copy()
+    value_table['Final Year Value'] = value_table['Shares'] * value_table['Price']
+    value_table = value_table.rename(columns={
         'Dividend/Share': 'Dividend per Share',
         'Annual Dividend': 'Total Dividends'
     })
-    income_table = income_table.sort_values(by='Final Year Income', ascending=False)
-    st.dataframe(income_table)
+    value_table = value_table[['Symbol', 'Final Year Value', 'Shares', 'Price', 'Dividend per Share', 'Total Dividends']]
+    value_table = value_table.sort_values(by='Final Year Value', ascending=False)
+    st.dataframe(value_table)
     st.download_button("📥 Download Results CSV", data=csv, file_name="income_projection_results.csv", mime="text/csv")
 else:
     st.info("Upload a CSV with your portfolio to begin.")
