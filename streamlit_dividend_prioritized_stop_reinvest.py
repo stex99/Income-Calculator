@@ -59,7 +59,8 @@ if uploaded_file:
                 reinvested_income = 0
 
                 if symbol in prioritized:
-                    reinvested_income = annual_div * data['reinvest_pct']
+            reinvested_income = annual_div * data['reinvest_pct']
+            data['shares'] += reinvested_income / data['share_price']
                     data['shares'] += reinvested_income / data['share_price']
                     new_shares = per_stock_contribution / data['share_price']
                     data['shares'] += new_shares
