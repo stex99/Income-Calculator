@@ -106,17 +106,14 @@ if uploaded_file:
     st.dataframe(summary_full)
 
     # Chart
-    st.subheader("📈 Cumulative Income vs. Target")
+    st.subheader("📈 Total Portfolio Income by Year")
+    income_by_year = results.groupby('Year')['Actual Income'].sum().reset_index()
     fig, ax = plt.subplots(figsize=(10, 6))
-    for symbol in results['Symbol'].unique():
-        data = results[results['Symbol'] == symbol]
-        ax.plot(data['Year'], data['Cumulative Income'], label=f'{symbol} Income', marker='o')
-        ax.plot(data['Year'], data['Cumulative Target'], linestyle='--', label=f'{symbol} Target', marker='x')
+    ax.bar(income_by_year['Year'], income_by_year['Actual Income'], color='skyblue')
     ax.set_xlabel("Year")
-    ax.set_ylabel("Cumulative $")
-    ax.set_title("Cumulative Income vs. Inflation-Adjusted Target")
-    ax.legend()
-    ax.grid(True)
+    ax.set_ylabel("Total Income ($)")
+    ax.set_title("Total Dividend Income by Year")
+    ax.grid(True, linestyle='--', alpha=0.5)
     st.pyplot(fig)
 
     # Download
