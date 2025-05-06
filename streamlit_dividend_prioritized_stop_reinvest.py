@@ -1,4 +1,5 @@
 
+
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -143,3 +144,4 @@ if uploaded_file:
     st.download_button("📥 Download Results CSV", data=csv, file_name="income_projection_results.csv", mime="text/csv")
 else:
     st.info("Upload a CSV with your portfolio to begin.")
+
