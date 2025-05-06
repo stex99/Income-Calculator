@@ -66,8 +66,6 @@ if uploaded_file:
                 per_stock_contribution = (quarterly_contribution * 4) / len(prioritized)
                 new_shares = per_stock_contribution / data['share_price']
                 data['shares'] += new_shares
-                    new_shares = per_stock_contribution / data['share_price']
-                    data['shares'] += new_shares
 
                 records.append({
                     'Year': year,
