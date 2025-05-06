@@ -121,6 +121,12 @@ if uploaded_file:
 
     # Download
     csv = results.to_csv(index=False).encode('utf-8')
+
+    # Final Total Portfolio Income
+    st.subheader("💰 Total Portfolio Income at Horizon")
+    final_year = results['Year'].max()
+    final_income = results[results['Year'] == final_year]['Actual Income'].sum()
+    st.metric(label="Total Income in Final Year", value=f"${final_income:,.2f}")
     st.download_button("📥 Download Results CSV", data=csv, file_name="income_projection_results.csv", mime="text/csv")
 else:
     st.info("Upload a CSV with your portfolio to begin.")
