@@ -1,0 +1,4 @@
+Symbol,Starting Shares,Share Price,Dividend,Payout Frequency,Div Growth %,Price Growth %,Reinvest %,Target Income,Inflation %
+OXLC,1000,5.00,0.90,M,2,3,100,2000,2
+XFLT,500,7.50,0.72,Q,3,4,100,1500,2
+NLY,400,15.00,1.20,Q,1,2,100,1200,2
